@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  xmlns:tns="https://simplesolution.dev/EmployeeService/"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                  name="EmployeeService"
+                  targetNamespace="https://simplesolution.dev/EmployeeService/">
+    <wsdl:types>
+        <xsd:schema targetNamespace="https://simplesolution.dev/EmployeeService/">
+            <xsd:element name="GetAllEmployees">
+                <xsd:complexType />
+            </xsd:element>
+            <xsd:element name="GetAllEmployeesResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="Employee" minOccurs="0" maxOccurs="unbounded">
+                            <xsd:complexType name="Employee">
+                                <xsd:sequence>
+                                    <xsd:element name="ID" type="xsd:string"></xsd:element>
+                                    <xsd:element name="FirstName" type="xsd:string"></xsd:element>
+                                    <xsd:element name="LastName" type="xsd:string"></xsd:element>
+                                </xsd:sequence>
+                            </xsd:complexType>
+                        </xsd:element>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+        </xsd:schema>
+    </wsdl:types>
+
+    <wsdl:message name="GetAllEmployeesRequest">
+        <wsdl:part name="parameters" element="tns:GetAllEmployees"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="GetAllEmployeesResponse">
+        <wsdl:part name="parameters" element="tns:GetAllEmployeesResponse"></wsdl:part>
+    </wsdl:message>
+
+    <wsdl:portType name="EmployeeService">
+        <wsdl:operation name="GetAllEmployees">
+            <wsdl:input message="tns:GetAllEmployeesRequest"></wsdl:input>
+            <wsdl:output message="tns:GetAllEmployeesResponse"></wsdl:output>
+        </wsdl:operation>
+    </wsdl:portType>
+
+    <wsdl:binding name="EmployeeServiceSOAP" type="tns:EmployeeService">
+        <soap:binding style="document"
+                      transport="http://schemas.xmlsoap.org/soap/http" />
+        <wsdl:operation name="GetAllEmployees">
+            <soap:operation
+                    soapAction="https://simplesolution.dev/EmployeeService/GetAllEmployees" />
+            <wsdl:input>
+                <soap:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal" />
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+
+    <wsdl:service name="EmployeeService">
+        <wsdl:port binding="tns:EmployeeServiceSOAP" name="EmployeeServiceSOAP">
+            <soap:address location="https://simplesolution.dev/EmployeeService" />
+        </wsdl:port>
+    </wsdl:service>
+</wsdl:definitions>
